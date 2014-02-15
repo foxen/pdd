@@ -18,7 +18,7 @@ class PddController extends BaseController {
     public function showResult()
     {   
         
-        Pdd::CreateUpdate();
+        Pdd::import(true);
         return;
     }
 

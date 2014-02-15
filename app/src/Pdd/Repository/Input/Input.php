@@ -69,5 +69,22 @@ class Input implements InputInterface{
         }
         return $editsArray;
     }
+
+    public function getImports(){
+
+        $importsArray = array();
+
+        foreach($this->adressesArray as $row){
+           
+                $importsArray[]=array(
+                    'token'       => $this->token,
+                    'login'       => $row[0],
+                    'password'      => $row[2]
+                );
+        }
+        return $importsArray;        
+
+
+    }
 }
 

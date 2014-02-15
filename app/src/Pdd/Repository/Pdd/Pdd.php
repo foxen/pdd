@@ -14,6 +14,43 @@ class Pdd implements PddInterface{
         $this->Update(true);
     }
 
+    public function import($output = false){
+        $importsArray = $this->Input->getImports();
+
+        $resArray = array();
+
+        if($output){
+            echo 'Importing...'.'<br>';
+        }
+
+        foreach ($importsArray as $box) {
+
+
+
+            $url =\cURL::buildUrl("https://pddimp.yandex.ru/start_import.xml",$box);
+            
+            $response = (array) simplexml_load_string(\cURL::get($url));
+
+
+            if(empty($response['error'])){
+                
+                $result = 'success';
+            
+            }else{
+                
+                $result = $response['error']['reason'];
+            
+            }
+
+            if($output){
+                echo $box['login'].' - '.$result.'<br>';
+            }            
+
+            $resArray[]=array($box['login'] => $result);
+
+        }
+    }
+
     public function Create($output = false){
         
         $createsArray = $this->Input->getRegs();
@@ -35,7 +72,7 @@ class Pdd implements PddInterface{
             
             }else{
                 
-                $result = $response['error'];
+                $result = 'error';
             
             }
 
